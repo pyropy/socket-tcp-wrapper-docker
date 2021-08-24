@@ -1,0 +1,19 @@
+version: "3.5"
+
+services:
+  socket-tcp-wrapper:
+    build:
+      context: ./
+    environment:
+      - CARDANO_NODE_SOCKET_PATH=/ipc/node.socket
+      - SOCKET_TCP_ADDRESS=socket-tcp-listner:3333
+    volumes:
+      - node-ipc:/ipc
+    restart: on-failure
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+volumes:
+  node-ipc:
